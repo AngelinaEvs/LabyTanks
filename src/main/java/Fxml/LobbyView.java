@@ -1,6 +1,5 @@
 package Fxml;
 
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -17,7 +16,6 @@ public class LobbyView extends Application {
 
     public LobbyView(Lobby lobby) {
         this.maze = lobby.getMaze();
-
         title = lobby.getName();
     }
 
@@ -27,46 +25,15 @@ public class LobbyView extends Application {
     }
 
     private void initUI(Stage stage) {
-
-        Canvas canvas = new Canvas(290, 240);
+        Canvas canvas = new Canvas(270, 240);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 11; j++) {
-//                a[i][j] = 0;
-//            }
-//        }
-//        a[0][2] = 10;
-//        a[1][2] = 10;
-//        a[7][4] = 10;
-//        a[7][7] = 10;
-//        a[1][5] = 10;
-//        a[1][7] = 1;
-//        a[1][8] = 1;
-//        a[2][0] = 1;
-//        a[2][1] = 1;
-//        a[2][2] = 1;
-//        a[2][7] = 10;
-//        a[3][2] = 1;
-//        a[3][3] = 1;
-//        a[3][5] = 11;
-//        a[3][7] = 11;
-//        a[3][8] = 1;
-//        a[4][4] = 10;
-//        a[4][9] = 1;
-//        a[5][1] = 1;
-//        a[5][4] = 10;
-//        a[5][8] = 1;
-//        a[5][9] = 10;
-//        a[6][5] = 10;
-//        a[7][5] = 10;
-//        a[7][9] = 10;
         Pane root = new Pane();
         drawLines(gc);
         drawTanks(root);
         root.getChildren().add(canvas);
-        Scene scene = new Scene(root, 280, 230, Color.WHITESMOKE);
+        Scene scene = new Scene(root, 260, 200, Color.WHITESMOKE);
         stage.setResizable(false);
-        stage.setTitle("Lobby " + title);
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }
@@ -74,32 +41,33 @@ public class LobbyView extends Application {
     private void drawLines(GraphicsContext gc) {
         gc.beginPath();
         int cursorX = 0;
-        int cursorY = 30;
+        int cursorY = 0;
+        initArray();
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 8; j++) {
+            for (int j = 7; j >= 0; j--) {
                 if (maze[i][j] == 1) {
                     gc.moveTo(cursorX, cursorY);
                     gc.lineTo(cursorX + 30, cursorY);
-                    cursorX = cursorX + 30;
+                    cursorY = cursorY + 30;
                 }
                 if (maze[i][j] == 3) {
                     gc.moveTo(cursorX, cursorY);
                     gc.lineTo(cursorX, cursorY - 30);
                     gc.moveTo(cursorX, cursorY);
                     gc.lineTo(cursorX + 30, cursorY);
-                    cursorX = cursorX + 30;
+                    cursorY = cursorY + 30;
                 }
                 if (maze[i][j] == 2) {
                     gc.moveTo(cursorX, cursorY);
                     gc.lineTo(cursorX, cursorY - 30);
-                    cursorX = cursorX + 30;
+                    cursorY = cursorY + 30;
                 }
                 if (maze[i][j] == 0) {
-                    cursorX = cursorX + 30;
-                }
-                if (j == 10) {
-                    cursorX = 0;
                     cursorY = cursorY + 30;
+                }
+                if (j == 0) {
+                    cursorY = 0;
+                    cursorX = cursorX + 30;
                 }
             }
         }
@@ -114,15 +82,15 @@ public class LobbyView extends Application {
                 t.setFill(Color.RED);
             }
             if (i == 1) {
-                t = new Rectangle(270, 10, 20, 20);
+                t = new Rectangle(240, 10, 20, 20);
                 t.setFill(Color.BLUE);
             }
             if (i == 2) {
-                t = new Rectangle(270, 210, 20, 20);
+                t = new Rectangle(240, 180, 20, 20);
                 t.setFill(Color.YELLOW);
             }
             if (i == 3) {
-                t = new Rectangle(10, 210, 20, 20);
+                t = new Rectangle(10, 180, 20, 20);
                 t.setFill(Color.GREEN);
             }
             root.getChildren().add(t);
